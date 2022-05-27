@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+        <strong>Message:</strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<h1>Home page</h1>
+<img src="{{ url_for('static', filename='img/m.webp') }}" alt="blog" style="width:100%; height:450px;">
+<div class="row mb-2 my-2">
+{% for blog in data %}
+
+<div class="col-md-6">
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h3 class="mb-0">{{blog.title}}</h3>
+            <div class="mb-1 text-muted">{{blog.pub_date}}</div>
+            <p class="card-text mb-auto">{{blog.content}}</p>
+            <h5>Author:-{{blog.author}}</h5>
+            <a href="/blog_detail/{{blog.blog_id}}" class="btn btn-primary">Continue reading</a>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+</div>
+<!-- {{current_user.username}} -->
+
+{% endblock body %}
